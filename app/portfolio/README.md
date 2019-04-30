@@ -205,7 +205,7 @@ found 0 vulnerabilities
 
 2. プロジェクトのコンソールからscriptタグを生成してコピーする
 
-3. Firebaseを利用するためにindex.jsを書き換える
+3. Firebaseを利用するためにindex.htmlを書き換える
 
 ```html:project_folder/app/project_name/public/index.html
 <!DOCTYPE html>
