@@ -18,7 +18,7 @@ export default {
             }
             firebase.auth().signOut().then(user => {
                 alert("ログアウトしました。")
-                this.$router.push("/login")
+                this.$router.push("/")
             })
             .catch(error => {
                 console.log(error);

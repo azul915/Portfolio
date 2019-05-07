@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 
 import Login from './components/Login.vue'
 import Myconfig from './components/Myconfig.vue'
+import Greeting from './components/Greeting.vue'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -18,20 +19,6 @@ let router =  new Router({
     },
     {
       path: '/',
-      name: 'home',
-      component: Home,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/login',
       name: 'Login',
       component: Login
     },
@@ -39,7 +26,26 @@ let router =  new Router({
       path: '/Myconfig',
       name: 'Myconfig',
       component: Myconfig
+    },
+    {
+      path: '/greeting',
+      name: 'Greeting',
+      component: Greeting
     }
+    // {
+    //   path: '/',
+    //   name: 'home',
+    //   component: Home,
+    //   meta: { requiresAuth: true }
+    // },
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    // }
   ]
 })
 
@@ -52,7 +58,7 @@ router.beforeEach((to, from, next) => {
                 next()
             } else {
                 next({
-                    path: '/login',
+                    path: '/',
                     query: { redirect: to.fullPath }
                 })
             }
