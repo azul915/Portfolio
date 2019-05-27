@@ -228,7 +228,7 @@ found 0 vulnerabilities
     <script>
       // Initialize Firebase
       var config = {
-        apiKey: "AIzaSyA5_D_dL7RQwEcF54RVRx2BPu7YM02GqsA",
+        apiKey: "apikeyapikeyapikeyapikeyapikeyapikeyapikeyapikey",
         authDomain: "project_name.firebaseapp.com",
         databaseURL: "https://project_name.firebaseio.com",
         projectId: "project_name-xxxxx",
