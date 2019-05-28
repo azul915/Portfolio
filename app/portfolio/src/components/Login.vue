@@ -1,8 +1,10 @@
 <template>
     <div class="login">
-        <input type="email" placeholder="Email" v-model="email">
-        <input type="password" placeholder="Password" v-model="password">
-        <button @click="login">ログイン</button>
+        <form @submit.prevent="login">
+            <input type="email" placeholder="Email" v-model="email">
+            <input type="password" placeholder="Password" v-model="password">
+            <button type="submit">ログイン</button>
+        </form>
         <!-- <p>You don't have an account? 
         <router-link to="/signup">create account now!!</router-link>
         </p> -->
