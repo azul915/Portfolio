@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <form @submit.prevent="login">
+        <form v-on:submit.prevent="login">
             <input type="email" placeholder="Email" v-model="email">
             <input type="password" placeholder="Password" v-model="password">
             <button type="submit">ログイン</button>
