@@ -114,7 +114,7 @@ export default {
                 alert("ログインしてください。")
                 return
             }
-            firebase.auth().signOut().then(user => {
+            firebase.auth().signOut().then(() => {
                 alert("ログアウトしました。")
                 this.$router.push("/")
             })
@@ -136,11 +136,12 @@ export default {
             }
 
             // ドキュメント名を指定してCloudFirestoreに追加
-            skills.doc(data.name).set(data).then(docRef => {
+            skills.doc(data.name).set(data).then(() => {
                 // registeredインスタンスに要素追加
                 this.registered.push(data)
                 this.name = ''; this.duration = ''; this.category = '';
                 this.term = ''; this.self_evaluation = ''; this.detail = '';
+                console.log("Document successfully written!")
             })
             .catch(error => {
                 console.log(error)
@@ -158,7 +159,7 @@ export default {
                     console.log("Document successfully deleted!")
                 })
                 .catch(error => {
-                    console.error("Error removing document: ", error)
+                    console.error(error)
                 })
             }
         }

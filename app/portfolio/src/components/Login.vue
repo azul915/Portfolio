@@ -26,6 +26,7 @@ export default {
     methods: {
         login() {
             firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(user => {
+                console.log("Login Succeeded!")
                 this.$router.push('/Myconfig')
             })
             .catch(error => {
