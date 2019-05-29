@@ -1,11 +1,10 @@
 <template>
     <div class="myconfig">
-        <!--<button @click="accountDelete()">アカウント削除</button>-->
         <div id="logout">
-            <button @click="logout">ログアウト</button>
+            <button v-on:click="logout">ログアウト</button>
         </div>
 
-        <form @submit.prevent="registerSkill" id="registerForm">
+        <form v-on:submit.prevent="registerSkill" id="registerForm">
             <div class="field">
                 <label class="label">スキル</label>
                 <div class="control">
@@ -63,6 +62,30 @@
                 </div>
             </div>
         </form>
+
+        <div class="registered">
+            <table>
+                <tr>
+                    <th class="name">name</th>
+                    <th class="term">term</th>
+                    <th class="category">category</th>
+                    <th class="duration">duration</th>
+                    <th class="self_evaluation">self_evaluation</th>
+                    <td class="detail">detail</td>
+                    <td class="delete"></td>
+                </tr>
+                
+                <tr v-for="(skill, id) in registered" :key="id">
+                    <td class="name">{{ skill.name }}</td>
+                    <td class="term">{{ skill.term }}</td>
+                    <td class="category">{{ skill.category }}</td>
+                    <td class="duration">{{ skill.duration }}</td>
+                    <td class="self_evaluation">{{ skill.self_evaluation }}</td>
+                    <td class="detail">{{ skill.detail }}</td>
+                    <td class="delete"><button v-on:click="deleteSkill(id, skill.name)">削除</button></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -79,10 +102,13 @@ export default {
             category: '',
             term: '',
             self_evaluation: '',
-            detail: ''
+            detail: '',
+            registered: []
         }
     },
+
     methods: {
+        // ログアウトの処理を行う
         logout() {
             if(!firebase.auth().currentUser) {
                 alert("ログインしてください。")
@@ -96,7 +122,8 @@ export default {
                 console.log(error)
             })
         },
-        
+
+        // スキルの登録を行う
         registerSkill() {
             const skills = db.collection('skills')
             let data = {
@@ -107,28 +134,55 @@ export default {
                 'self_evaluation': this.self_evaluation,
                 'detail': this.detail
             }
-            skills.add(data).then(docRef => {
-                document.getElementById('registerForm').reset()
-                console.log("Document written with ID: ", docRef.id)
+
+            // ドキュメント名を指定してCloudFirestoreに追加
+            skills.doc(data.name).set(data).then(docRef => {
+                // registeredインスタンスに要素追加
+                this.registered.push(data)
+                this.name = ''; this.duration = ''; this.category = '';
+                this.term = ''; this.self_evaluation = ''; this.detail = '';
             })
             .catch(error => {
                 console.log(error)
             })
+        },
+
+        // スキルの削除を行う
+        deleteSkill(id, doc_name){
+            if(confirm('削除しますか?')){
+                // registeredインスタンスの要素削除
+                this.registered.splice(id, 1)
+
+                // ドキュメント名を指定してCloudFirestoreのドキュメントを削除
+                db.collection('skills').doc(doc_name).delete().then(() => {
+                    console.log("Document successfully deleted!")
+                })
+                .catch(error => {
+                    console.error("Error removing document: ", error)
+                })
+            }
         }
-        // ,
-        // accountDelete() {
-        //     if(!firebase.auth().currentUser) {
-        //         alert("ログインしてください。")
-        //         return
-        //     }
-        //     firebase.auth().currentUser.delete().then(user => {
-        //         alert("アカウントを削除しました。")
-        //         this.$router.go()
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
-        // }
+    },
+
+    // 登録済みのスキル一覧を表示する
+    created() {
+        db.collection('skills').get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+            let data = {
+                'name': doc.data().name,
+                'category': doc.data().category,
+                'term': doc.data().term,
+                'began_at': doc.data().began_at,
+                'duration': doc.data().duration,
+                'self_evaluation': doc.data().self_evaluation,
+                'detail': doc.data().detail
+            }
+            this.registered.push(data)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 };
 </script>
