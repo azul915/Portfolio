@@ -8,6 +8,7 @@
         <!-- <p>You don't have an account? 
         <router-link to="/signup">create account now!!</router-link>
         </p> -->
+        <router-link to="/">戻る</router-link>
   </div>
 </template>
 

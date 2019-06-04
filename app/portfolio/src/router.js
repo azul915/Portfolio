@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Myconfig from './components/Myconfig.vue'
+import Login from './components/Login.vue'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -14,6 +15,11 @@ let router =  new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/admin',
+      name: 'login',
+      component: Login
     },
     {
       path: '/Myconfig',

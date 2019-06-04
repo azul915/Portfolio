@@ -22,4 +22,7 @@ yarn-error.log*
 
 # firebase
 .firebase
-./src/firebaseInit.js
+src/firebaseInit.js
+
+# images
+public/images/
