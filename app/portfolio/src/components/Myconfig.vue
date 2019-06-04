@@ -14,24 +14,24 @@
             <div class="field">
                 <label class="label">経験期間</label>
                 <div class="control">
-                    <input type="text" v-model="duration" placeholder="経験期間" required>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">種類</label>
-                <div class="control">
-                    <select v-model="category">
-                        <option>言語</option>
-                        <option>サーバーOS</option>
-                        <option>フレームワーク</option>
-                        <option>ツール/ミドルウェア</option>
-                    </select>
+                    <input type="number" v-model="duration" placeholder="経験期間" required>
                 </div>
             </div>
             <div class="field">
                 <label class="label">カテゴリ</label>
                 <div class="control">
-                    <select v-model="term">
+                    <select v-model="category_id" required>
+                        <option value="0">言語</option>
+                        <option value="1">サーバーOS</option>
+                        <option value="2">フレームワーク</option>
+                        <option value="3">ツール/ミドルウェア</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">ターム</label>
+                <div class="control">
+                    <select v-model="term" required>
                         <option>フロントエンド</option>
                         <option>サーバーサイド</option>
                         <option>インフラ</option>
@@ -42,11 +42,11 @@
                 <label class="label">習熟度</label>
                 <div class="control">
                     <div id="radio">
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value=1 checked>1</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value=2>2</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value=3>3</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value=4>4</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value=5>5</label>
+                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="1" required>1</label>
+                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="2">2</label>
+                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="3">3</label>
+                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="4">4</label>
+                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="5">5</label>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 <tr v-for="(skill, id) in registered" :key="id">
                     <td class="name">{{ skill.name }}</td>
                     <td class="term">{{ skill.term }}</td>
-                    <td class="category">{{ skill.category }}</td>
+                    <td class="category">{{ skill.category_name }}</td>
                     <td class="duration">{{ skill.duration }}</td>
                     <td class="self_evaluation">{{ skill.self_evaluation }}</td>
                     <td class="detail">{{ skill.detail }}</td>
@@ -99,7 +99,8 @@ export default {
         return {
             name: '',
             duration: '',
-            category: '',
+            category_id: '',
+            category_name: '',
             term: '',
             self_evaluation: '',
             detail: '',
@@ -125,18 +126,41 @@ export default {
 
         // スキルの登録を行う
         registerSkill() {
-            const skills = db.collection('skills')
-            let data = {
-                'name': this.name,
-                'duration': this.duration,
-                'category': this.category,
-                'term': this.term,
-                'self_evaluation': this.self_evaluation,
-                'detail': this.detail
+            // フォームが空のとき送信させない
+            if (!this.name || !this.duration || !this.category_id || !this.term || !this.self_evaluation || !this.detail) return
+
+            let category_name = ''
+            let num  = this.category_id | 0
+
+            switch(num) {
+                case 0:
+                    category_name = '言語'
+                    break
+                case 1:
+                    category_name = 'サーバーOS'
+                    break
+                case 2:
+                    category_name = 'フレームワーク'
+                    break
+                case 3:
+                    category_name = 'ツール/ミドルウェア'
+                    break
+                default:
+                    category_name = 'Error'
             }
 
+            let data = {
+                'name': this.name,
+                'duration': this.duration | 0,
+                'category': { id: num, name: category_name },
+                'term': this.term,
+                'self_evaluation': this.self_evaluation | 0,
+                'detail': this.detail,
+                'created_at': firebase.firestore.FieldValue.serverTimestamp()
+            }
+            
             // ドキュメント名を指定してCloudFirestoreに追加
-            skills.doc(data.name).set(data).then(() => {
+            db.collection('skills').doc(data.name).set(data).then(() => {
                 // registeredインスタンスに要素追加
                 this.registered.push(data)
                 this.name = ''; this.duration = ''; this.category = '';
@@ -167,11 +191,11 @@ export default {
 
     // 登録済みのスキル一覧を表示する
     created() {
-        db.collection('skills').get().then(querySnapshot => {
+        db.collection('skills').orderBy('created_at', 'asc').get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
             let data = {
                 'name': doc.data().name,
-                'category': doc.data().category,
+                'category_name': doc.data().category.name,
                 'term': doc.data().term,
                 'began_at': doc.data().began_at,
                 'duration': doc.data().duration,
