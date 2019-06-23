@@ -32,9 +32,9 @@
                 <label class="label">ターム</label>
                 <div class="control">
                     <select v-model="term" required>
-                        <option>フロントエンド</option>
-                        <option>サーバーサイド</option>
-                        <option>インフラ</option>
+                        <option value="serverside">サーバーサイド</option>
+                        <option value="frontend">フロントエンド</option>
+                        <option value="infrastructure">インフラ</option>
                     </select>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             </div>
         </form>
 
-        <div class="registered">
+        <div class="serverside">
             <table>
                 <tr>
                     <th class="name">name</th>
@@ -75,17 +75,66 @@
                     <td class="delete"></td>
                 </tr>
                 
-                <tr v-for="(skill, id) in registered" :key="id">
+                <tr v-for="(skill, id) in serverside" :key="id">
                     <td class="name">{{ skill.name }}</td>
                     <td class="term">{{ skill.term }}</td>
                     <td class="category">{{ skill.category_name }}</td>
                     <td class="duration">{{ skill.duration }}</td>
                     <td class="self_evaluation">{{ skill.self_evaluation }}</td>
                     <td class="detail">{{ skill.detail }}</td>
-                    <td class="delete"><button v-on:click="deleteSkill(id, skill.name)">削除</button></td>
+                    <td class="delete"><button v-on:click="deleteSkill(id, skill.term, skill.name)">削除</button></td>
                 </tr>
             </table>
         </div>
+
+        <div class="frontend">
+            <table>
+                <tr>
+                    <th class="name">name</th>
+                    <th class="term">term</th>
+                    <th class="category">category</th>
+                    <th class="duration">duration</th>
+                    <th class="self_evaluation">self_evaluation</th>
+                    <td class="detail">detail</td>
+                    <td class="delete"></td>
+                </tr>
+                
+                <tr v-for="(skill, id) in frontend" :key="id">
+                    <td class="name">{{ skill.name }}</td>
+                    <td class="term">{{ skill.term }}</td>
+                    <td class="category">{{ skill.category_name }}</td>
+                    <td class="duration">{{ skill.duration }}</td>
+                    <td class="self_evaluation">{{ skill.self_evaluation }}</td>
+                    <td class="detail">{{ skill.detail }}</td>
+                    <td class="delete"><button v-on:click="deleteSkill(id, skill.term, skill.name)">削除</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="infrastructure">
+            <table>
+                <tr>
+                    <th class="name">name</th>
+                    <th class="term">term</th>
+                    <th class="category">category</th>
+                    <th class="duration">duration</th>
+                    <th class="self_evaluation">self_evaluation</th>
+                    <td class="detail">detail</td>
+                    <td class="delete"></td>
+                </tr>
+                
+                <tr v-for="(skill, id) in infrastructure" :key="id">
+                    <td class="name">{{ skill.name }}</td>
+                    <td class="term">{{ skill.term }}</td>
+                    <td class="category">{{ skill.category_name }}</td>
+                    <td class="duration">{{ skill.duration }}</td>
+                    <td class="self_evaluation">{{ skill.self_evaluation }}</td>
+                    <td class="detail">{{ skill.detail }}</td>
+                    <td class="delete"><button v-on:click="deleteSkill(id, skill.term, skill.name)">削除</button></td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </template>
 
@@ -104,7 +153,9 @@ export default {
             term: '',
             self_evaluation: '',
             detail: '',
-            registered: []
+            serverside: [],
+            frontend: [],
+            infrastructure: [],
         }
     },
 
@@ -158,11 +209,21 @@ export default {
                 'detail': this.detail,
                 'created_at': firebase.firestore.FieldValue.serverTimestamp()
             }
-            
-            // ドキュメント名を指定してCloudFirestoreに追加
-            db.collection('skills').doc(data.name).set(data).then(() => {
-                // registeredインスタンスに要素追加
-                this.registered.push(data)
+
+            // タームの値で登録先コレクションとドキュメント名を指定してCloudFirestoreに追加
+            db.collection(data.term).doc(data.name).set(data).then(() => {
+
+                // タームの値で登録先コンポーネントに要素追加
+                switch(data.term) {
+                    case 'serverside':
+                        this.serverside.push(data)
+                        break
+                    case 'frontend':
+                        this.frontend.push(data)
+                        break
+                    case 'infrastructure':
+                        this.infrastructure.push(data)
+                }
                 this.name = ''; this.duration = ''; this.category = '';
                 this.term = ''; this.self_evaluation = ''; this.detail = '';
                 console.log("Document successfully written!")
@@ -173,25 +234,40 @@ export default {
         },
 
         // スキルの削除を行う
-        deleteSkill(id, doc_name){
+        deleteSkill(id, term, doc_name){
             if(confirm('削除しますか?')){
-                // registeredインスタンスの要素削除
-                this.registered.splice(id, 1)
 
-                // ドキュメント名を指定してCloudFirestoreのドキュメントを削除
-                db.collection('skills').doc(doc_name).delete().then(() => {
+                // タームの値でコンポーネントを選択して登録要素削除
+                let target = ''
+                switch(term) {
+                    case 'serverside':
+                        target = this.serverside
+                        break
+                    case 'frontend':
+                        target = this.frontend
+                        break
+                    case 'infrastructure':
+                        target = this.infrastructure
+                }
+                target.splice(id, 1)
+
+                // タームの値で登録先コレクションとドキュメント名を指定してCloudFirestoreのドキュメントを削除
+                db.collection(term).doc(doc_name).delete().then(() => {
                     console.log("Document successfully deleted!")
                 })
                 .catch(error => {
                     console.error(error)
                 })
+
             }
         }
     },
 
     // 登録済みのスキル一覧を表示する
     created() {
-        db.collection('skills').orderBy('created_at', 'asc').get().then(querySnapshot => {
+
+        // 「サーバーサイド」のスキル一覧表示
+        db.collection('serverside').orderBy('created_at', 'asc').get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
             let data = {
                 'name': doc.data().name,
@@ -202,12 +278,51 @@ export default {
                 'self_evaluation': doc.data().self_evaluation,
                 'detail': doc.data().detail
             }
-            this.registered.push(data)
+            this.serverside.push(data)
             })
         })
         .catch(error => {
             console.log(error)
         })
+
+        // 「フロントエンド」のスキル一覧表示
+        db.collection('frontend').orderBy('created_at', 'asc').get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+            let data = {
+                'name': doc.data().name,
+                'category_name': doc.data().category.name,
+                'term': doc.data().term,
+                'began_at': doc.data().began_at,
+                'duration': doc.data().duration,
+                'self_evaluation': doc.data().self_evaluation,
+                'detail': doc.data().detail
+            }
+            this.frontend.push(data)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
+        // 「インフラ」のスキル一覧表示
+        db.collection('infrastructure').orderBy('created_at', 'asc').get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+            let data = {
+                'name': doc.data().name,
+                'category_name': doc.data().category.name,
+                'term': doc.data().term,
+                'began_at': doc.data().began_at,
+                'duration': doc.data().duration,
+                'self_evaluation': doc.data().self_evaluation,
+                'detail': doc.data().detail
+            }
+            this.infrastructure.push(data)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
     }
 };
 </script>
