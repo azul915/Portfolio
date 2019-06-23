@@ -1,66 +1,70 @@
 <template>
-    <section id="sec02">
-    <div class="server_side">
-        <table>
-        <tr>
-            <th class="term">サーバーサイド</th>
-            <th class="category">言語/サーバーOS/FW/ツール・MW</th>
-            <th class="name">名前</th>
-            <th class="duration">経験(ヶ月)</th>
-            <th class="self_evaluation">自己評価(5段階)</th>
-            <th class="detail">詳細</th>
-        </tr>
-        <tr v-for="(skill, id) in server_sides" :key="id">
-            <td></td>
-            <td>{{ skill.category }}</td>
-            <td>{{ skill.name }}</td>
-            <td>{{ skill.duration }}</td>
-            <td>{{ skill.self_evaluation }}</td>
-            <td>{{ skill.detail }}</td>
-        </tr>
-        </table>
+    <div id="sec02">
+        <h2><span>SKILL</span></h2>
+
+        <div class="inner">
+            <div class="server_side">
+                <table>
+                <tr>
+                    <th class="term">サーバーサイド</th>
+                    <th class="category">言語/サーバーOS/FW/ツール・MW</th>
+                    <th class="name">名前</th>
+                    <th class="duration">経験(ヶ月)</th>
+                    <th class="self_evaluation">自己評価(5段階)</th>
+                    <th class="detail">詳細</th>
+                </tr>
+                <tr v-for="(skill, id) in server_side" :key="id">
+                    <td></td>
+                    <td>{{ skill.category_name }}</td>
+                    <td>{{ skill.name }}</td>
+                    <td>{{ skill.duration }}</td>
+                    <td>{{ skill.self_evaluation }}</td>
+                    <td>{{ skill.detail }}</td>
+                </tr>
+                </table>
+            </div>
+            <div class="front_end">
+                <table>
+                <tr>
+                    <th>フロントエンド</th>
+                    <th class="category">言語/サーバーOS/FW/ツール・MW</th>
+                    <th class="name">名前</th>
+                    <th class="duration">経験(ヶ月)</th>
+                    <th class="self_evaluation">自己評価(5段階)</th>
+                    <th class="detail">詳細</th>
+                </tr>
+                <tr v-for="(skill, id) in front_end" :key="id">
+                    <td></td>
+                    <td>{{ skill.category_name }}</td>
+                    <td>{{ skill.name }}</td>
+                    <td>{{ skill.duration }}</td>
+                    <td>{{ skill.self_evaluation }}</td>
+                    <td>{{ skill.detail }}</td>
+                </tr>
+                </table>
+            </div>
+             <div class="infrastructure">
+                <table>
+                <tr>
+                    <th>インフラ</th>
+                    <th class="category">言語/サーバーOS/FW/ツール・MW</th>
+                    <th class="name">名前</th>
+                    <th class="duration">経験(ヶ月)</th>
+                    <th class="self_evaluation">自己評価(5段階)</th>
+                    <th class="detail">詳細</th>
+                </tr>
+                <tr v-for="(skill, id) in infrastructure" :key="id">
+                    <td></td>
+                    <td>{{ skill.category_name }}</td>
+                    <td>{{ skill.name }}</td>
+                    <td>{{ skill.duration }}</td>
+                    <td>{{ skill.self_evaluation }}</td>
+                    <td>{{ skill.detail }}</td>
+                </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="front_end">
-        <table>
-        <tr>
-            <th>フロントエンド</th>
-            <th class="category">言語/サーバーOS/FW/ツール・MW</th>
-            <th class="name">名前</th>
-            <th class="duration">経験(ヶ月)</th>
-            <th class="self_evaluation">自己評価(5段階)</th>
-            <th class="detail">詳細</th>
-        </tr>
-        <tr v-for="(skill, id) in front_ends" :key="id">
-            <td></td>
-            <td>{{ skill.category }}</td>
-            <td>{{ skill.name }}</td>
-            <td>{{ skill.duration }}</td>
-            <td>{{ skill.self_evaluation }}</td>
-            <td>{{ skill.detail }}</td>
-        </tr>
-        </table>
-    </div>
-    <div class="infrastructure">
-        <table>
-        <tr>
-            <th>インフラ</th>
-            <th class="category">言語/サーバーOS/FW/ツール・MW</th>
-            <th class="name">名前</th>
-            <th class="duration">経験(ヶ月)</th>
-            <th class="self_evaluation">自己評価(5段階)</th>
-            <th class="detail">詳細</th>
-        </tr>
-        <tr v-for="(skill, id) in infrastructures" :key="id">
-            <td></td>
-            <td>{{ skill.category }}</td>
-            <td>{{ skill.name }}</td>
-            <td>{{ skill.duration }}</td>
-            <td>{{ skill.self_evaluation }}</td>
-            <td>{{ skill.detail }}</td>
-        </tr>
-        </table>
-    </div>
-    </section>
 </template>
 <script>
 import db from '@/firebaseInit.js'
@@ -69,70 +73,80 @@ export default {
     name: 'skills',
     data () {
         return {
-            server_sides: [],
-            front_ends: [],
-            infrastructures: []
+            server_side: [],
+            front_end: [],
+            infrastructure: []
         }
     },
     created() {
-        const skills = db.collection('skills')
 
+        // それぞれのコレクションをカテゴリー順/asc, 自己評価/descでソート、取得(カスタムインデックス設定必要)
         // ServerSide
-        skills.where('term', '==', 'サーバーサイド').get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-            let data = {
-                'name': doc.data().name,
-                'category': doc.data().category,
-                'term': doc.data().term,
-                'began_at': doc.data().began_at,
-                'duration': doc.data().duration,
-                'self_evaluation': doc.data().self_evaluation,
-                'detail': doc.data().detail
-            }
-            this.server_sides.push(data)
+        db.collection('serverside')
+            .orderBy('category', 'asc')
+            .orderBy('self_evaluation', 'desc').get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                let data = {
+                    'name': doc.data().name,
+                    'category_name': doc.data().category.name,
+                    'term': doc.data().term,
+                    'began_at': doc.data().began_at,
+                    'duration': doc.data().duration,
+                    'self_evaluation': doc.data().self_evaluation,
+                    'detail': doc.data().detail
+                }
+                this.server_side.push(data)
+                })
             })
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .catch(error => {
+                console.log(error)
+            }
+        )
 
         // Frontend
-        skills.where('term', '==', 'フロントエンド').get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-            let data = {
-                'name': doc.data().name,
-                'category': doc.data().category,
-                'term': doc.data().term,
-                'began_at': doc.data().began_at,
-                'duration': doc.data().duration,
-                'self_evaluation': doc.data().self_evaluation,
-                'detail': doc.data().detail
-            }
-            this.front_ends.push(data)
+        db.collection('frontend')
+            .orderBy('category', 'asc')
+            .orderBy('self_evaluation', 'desc').get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                let data = {
+                    'name': doc.data().name,
+                    'category_name': doc.data().category.name,
+                    'term': doc.data().term,
+                    'began_at': doc.data().began_at,
+                    'duration': doc.data().duration,
+                    'self_evaluation': doc.data().self_evaluation,
+                    'detail': doc.data().detail
+                }
+                this.front_end.push(data)
+                })
             })
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .catch(error => {
+                console.log(error)
+            }
+        )
 
         // Infrastructure
-        skills.where('term', '==', 'インフラ').get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-            let data = {
-                'name': doc.data().name,
-                'category': doc.data().category,
-                'term': doc.data().term,
-                'began_at': doc.data().began_at,
-                'duration': doc.data().duration,
-                'self_evaluation': doc.data().self_evaluation,
-                'detail': doc.data().detail
-            }
-            this.infrastructures.push(data)
+        db.collection('infrastructure')
+            .orderBy('category', 'asc')
+            .orderBy('self_evaluation', 'desc').get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                let data = {
+                    'name': doc.data().name,
+                    'category_name': doc.data().category.name,
+                    'term': doc.data().term,
+                    'began_at': doc.data().began_at,
+                    'duration': doc.data().duration,
+                    'self_evaluation': doc.data().self_evaluation,
+                    'detail': doc.data().detail
+                }
+                this.infrastructure.push(data)
+                })
             })
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .catch(error => {
+                console.log(error)
+            }
+        )
+
     }
 }
 </script>
