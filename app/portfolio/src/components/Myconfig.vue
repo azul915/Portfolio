@@ -4,64 +4,100 @@
             <button v-on:click="logout">ログアウト</button>
         </div>
 
-        <form v-on:submit.prevent="registerSkill" id="registerForm">
-            <div class="field">
-                <label class="label">スキル</label>
-                <div class="control">
-                    <input type="text" v-model="name" placeholder="スキル" required>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">経験期間</label>
-                <div class="control">
-                    <input type="number" v-model="duration" placeholder="経験期間" required>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">カテゴリ</label>
-                <div class="control">
-                    <select v-model="category_id" required>
-                        <option value="0">言語</option>
-                        <option value="1">サーバーOS</option>
-                        <option value="2">フレームワーク</option>
-                        <option value="3">ツール/ミドルウェア</option>
-                    </select>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">ターム</label>
-                <div class="control">
-                    <select v-model="term" required>
-                        <option value="serverside">サーバーサイド</option>
-                        <option value="frontend">フロントエンド</option>
-                        <option value="infrastructure">インフラ</option>
-                    </select>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">習熟度</label>
-                <div class="control">
-                    <div id="radio">
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="1" required>1</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="2">2</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="3">3</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="4">4</label>
-                        <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="5">5</label>
+        <div class="registerSkill">
+            <form v-on:submit.prevent="registerSkill" id="registerForm">
+                <div class="field">
+                    <label class="label">スキル</label>
+                    <div class="control">
+                        <input type="text" v-model="name" placeholder="スキル" required>
                     </div>
                 </div>
-            </div>
-            <div class="field">
-                <label class="label">詳細</label>
-                <div class="control">
-                    <textarea v-model="detail" placeholder="アピール欄" required></textarea>
+                <div class="field">
+                    <label class="label">経験期間</label>
+                    <div class="control">
+                        <input type="number" v-model="duration" placeholder="経験期間" required>
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <button type="submit">登録する</button>
+                <div class="field">
+                    <label class="label">カテゴリ</label>
+                    <div class="control">
+                        <select v-model="category_id" required>
+                            <option value="0">言語</option>
+                            <option value="1">サーバーOS</option>
+                            <option value="2">フレームワーク</option>
+                            <option value="3">ツール/ミドルウェア</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="field">
+                    <label class="label">ターム</label>
+                    <div class="control">
+                        <select v-model="term" required>
+                            <option value="serverside">サーバーサイド</option>
+                            <option value="frontend">フロントエンド</option>
+                            <option value="infrastructure">インフラ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">習熟度</label>
+                    <div class="control">
+                        <div id="radio">
+                            <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="1" required>1</label>
+                            <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="2">2</label>
+                            <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="3">3</label>
+                            <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="4">4</label>
+                            <label><input type="radio" name="self_evaluation" v-model="self_evaluation" value="5">5</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">詳細</label>
+                    <div class="control">
+                        <textarea v-model="detail" placeholder="アピール欄" required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button type="submit">登録する</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="registerProduct">
+            <form v-on:submit.prevent="registerProduct">
+                <div class="field">
+                    <label class="label">プロダクト名</label>
+                    <div class="control">
+                        <input type="text" v-model="prd_name" placeholder="プロダクト名">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">デモ</label>
+                    <div class="control">
+                        <input type="file" v-on:change="selectedFile" accept="image/png,image/jpeg,image/gif"> 
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">力を入れたこと</label>
+                    <div class="controll">
+                        <input type="text" v-model="effort" placeholder="力を入れたこと">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">特徴</label>
+                    <div class="controll">
+                         <input type="text" v-model="feature" placeholder="特徴">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button type="submit">登録する</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="serverside">
             <table>
@@ -153,9 +189,13 @@ export default {
             term: '',
             self_evaluation: '',
             detail: '',
+            prd_name: '',
+            effort: '',
+            feature: '',
             serverside: [],
             frontend: [],
             infrastructure: [],
+            product: [],
         }
     },
 
@@ -260,6 +300,63 @@ export default {
                 })
 
             }
+        },
+
+        // ファイルのアップロード
+        selectedFile(evt) {
+            let files = evt.target.files
+            this.demo = files[0]
+            // let file_name = file[0].name
+        },
+
+        // プロダクトの登録を行う
+        registerProduct() {
+
+            let prd = {
+                'prd_name': this.prd_name,
+                'demo': null, 
+                'effort': this.effort,
+                'feature': this.feature,
+                'created_at': firebase.firestore.FieldValue.serverTimestamp()
+            }
+
+            // storageにアップロード
+            let file_name = this.demo.name
+            let storage = firebase.storage()
+            let uploadRef = storage.ref('images/').child(file_name)
+            uploadRef.put(this.demo).then(snapshot => {
+                console.log(snapshot.state)
+                // アップロードしたurlをdemoのパスとしてセット
+                uploadRef.getDownloadURL().then(url => {
+                    prd.demo = url
+                    // productsコレクションを指定して登録
+                    db.collection('products').doc(this.prd_name).set(prd).then(() => {
+                        this.product.push(prd)
+                        console.log('Succeeded update url')
+                        this.prd_name = ''; this.effort = ''; this.feature = '';
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+
+        // プロダクトの削除を行う
+        deleteProduct(id, doc_name) {
+            if(confirm('削除しますか?')) {
+
+                // プロダクトの名前でドキュメントを選択して登録を削除
+                db.collection('products').doc(doc_name).delete().then(() => {
+                    console.log("Document successfully deleted!")
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+            }
         }
     },
 
@@ -323,6 +420,7 @@ export default {
             console.log(error)
         })
 
-    }
+    },
+
 };
 </script>
