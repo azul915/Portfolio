@@ -171,6 +171,24 @@
             </table>
         </div>
 
+        <div class="products">
+            <table>
+                <tr>
+                    <th class="name">name</th>
+                    <th class="effort">effort</th>
+                    <th class="feature">feature</th>
+                    <td class="delete"></td>
+                </tr>
+
+                <tr v-for="(product, id) in products" :key="id">
+                    <td class="name">{{ product.name }}</td>
+                    <td class="effort">{{ product.effort }}</td>
+                    <td class="feature">{{ product.feature }}</td>
+                    <td class="delete"><button v-on:click="deleteProduct(id, product.name)">削除</button></td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </template>
 
@@ -195,7 +213,7 @@ export default {
             serverside: [],
             frontend: [],
             infrastructure: [],
-            product: [],
+            products: [],
         }
     },
 
@@ -350,6 +368,7 @@ export default {
 
                 // プロダクトの名前でドキュメントを選択して登録を削除
                 db.collection('products').doc(doc_name).delete().then(() => {
+                    this.products.splice(id, 1)
                     console.log("Document successfully deleted!")
                 })
                 .catch(error => {
@@ -419,6 +438,21 @@ export default {
             console.log(error)
         })
 
+        // プロダクトの一覧表示
+        db.collection('products').orderBy('created_at', 'asc').get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+            let data = {
+                'name': doc.data().prd_name,
+                'demoURL': doc.data().demo,
+                'feature': doc.data().feature,
+                'effort': doc.data().effort
+            }
+            this.products.push(data)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     },
 
 };

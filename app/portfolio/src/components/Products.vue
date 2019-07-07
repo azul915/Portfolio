@@ -36,22 +36,20 @@ export default {
     created() {
 
         // 登録順にソート
-        db.collection('products')
-            .orderBy('created_at').get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                let data = {
-                    'name': doc.data().prd_name,
-                    'demoURL': doc.data().demo,
-                    'feature': doc.data().feature,
-                    'effort': doc.data().effort
-                }
-                this.products.push(data)
-                })
-            })
-            .catch(error => {
-                console.log(error)
+        db.collection('products').orderBy('created_at', 'asc').get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+            let data = {
+                'name': doc.data().prd_name,
+                'demoURL': doc.data().demo,
+                'feature': doc.data().feature,
+                'effort': doc.data().effort
             }
-        )
+            this.products.push(data)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
 
     }
 }
