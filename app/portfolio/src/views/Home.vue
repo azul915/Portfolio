@@ -1,8 +1,8 @@
 <template>
     <div class="top">
         <div id="wrapper">
-            
-            <!-- Sidebar -->
+
+            <!-- ▼Sidebar -->
             <div id="sidebar">
                 <div id="sidebarWrap">
                     <h1><img src="images/logo.png" width="87" height="25" alt="logo"></h1>
@@ -25,44 +25,48 @@
                     </nav>
                 </div>
             </div>
-            <!-- // Sidebar -->
-            <!-- Content -->
+            <!-- ▲Sidebar -->
+
+            <!-- ▼Content -->
             <div id="content">
                 <p id="mainImg">
                     <!-- <img src="images/mainImg.jpg" alt=""> -->
                     <!-- <img src="images/CLOSING_THE_DISTANCE.png" alt=""> -->
                     <MainImg/>
                 </p>
-                <!-- sec01_Profile -->
+                <!-- ▼sec01_Profile -->
                 <section id="sec01">
                     <Profile/>
                 </section>
-                <!-- // sec01_Profile -->
-                <!-- sec02_Skills -->
+                <!-- ▲sec01_Profile -->
+                <!-- ▼sec02_Skills -->
                 <section id="sec02">
                     <Skills/>
                 </section>
-                <!-- // sec02_Skills -->
-                <!-- sec03_Products -->
+                <!-- ▲sec02_Skills -->
+                <!-- ▼sec03_Products -->
                 <section id="sec03">
                     <Products/>
                 </section>
-                <!-- // sec03_Products -->
-                <!-- sec04_Blog -->
+                <!-- ▲sec03_Products -->
+                <!-- ▼sec04_Blog -->
                 <section id="sec04">
                     <Blog/>
                 </section>
-                <!-- // sec04_Blog -->
-                <!-- sec05_Contact -->
+                <!-- ▲sec04_Blog -->
+                <!-- ▼sec05_Contact -->
                 <section id="sec05">
                     <Contact/>
                 </section>
-                <!-- // sec05_Contact -->
-
+                <!-- ▲sec05_Contact -->
+                
+                <!-- ▼footer -->
                 <footer id="footer">Copyright(c) 2019 domain name Hosted by firebase<!-- クレジット表記を外す場合はシリアルキーが必要です http://f-tpl.com/credit/ --></footer>
                 <router-link to="/admin">ログイン</router-link>
+                <!-- ▲footer -->
             </div>
-            <!-- // Content -->
+            <!-- ▲Content -->
+
         </div>
     </div>
 </template>

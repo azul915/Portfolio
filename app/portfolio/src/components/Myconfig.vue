@@ -158,7 +158,7 @@
                     <td class="detail">detail</td>
                     <td class="delete"></td>
                 </tr>
-                
+
                 <tr v-for="(skill, id) in infrastructure" :key="id">
                     <td class="name">{{ skill.name }}</td>
                     <td class="term">{{ skill.term }}</td>
@@ -302,11 +302,10 @@ export default {
             }
         },
 
-        // ファイルのアップロード
+        // ファイルの選択
         selectedFile(evt) {
             let files = evt.target.files
             this.demo = files[0]
-            // let file_name = file[0].name
         },
 
         // プロダクトの登録を行う
