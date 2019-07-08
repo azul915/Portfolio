@@ -378,9 +378,10 @@ export default {
         }
     },
 
-    // 登録済みのスキル一覧を表示する
+    // インスタンスライフサイクルフック
     created() {
 
+        // 登録済みのスキル一覧を表示する
         // 「サーバーサイド」のスキル一覧表示
         db.collection('serverside').orderBy('created_at', 'asc').get().then(querySnapshot => {
             querySnapshot.forEach(doc => {

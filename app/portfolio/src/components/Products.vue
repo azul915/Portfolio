@@ -33,6 +33,8 @@ export default {
             products: []
         }
     },
+
+    // インスタンスライフサイクルフック
     created() {
 
         // 登録順にソート
