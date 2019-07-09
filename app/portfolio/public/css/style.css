@@ -38,7 +38,7 @@ a:active, a:focus,input:active, input:focus{outline:0;}
 ------------------------------------------------------------*/
 #mainnav a{
 	color: #000;
-	font-family: 'Modern Antiqua', 'Noto Sans JP',serif;
+	font-family: 'Lato', 'Noto Sans JP', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 }
 
 
@@ -55,7 +55,7 @@ a:active, a:focus,input:active, input:focus{outline:0;}
 /* 共通
 ------------------------------------------------------------*/
 h1, h2{
-	font-family: 'Modern Antiqua', 'Noto Sans JP',serif;
+	font-family: 'Lato', 'Noto Sans JP', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 }
 
 img{
@@ -94,6 +94,41 @@ section h2 span {
 	width: 60%;
 	margin: 0 auto;
 	padding-bottom: 80px;
+}
+
+/* Background
+------------------------------------------------------------*/
+.greeting {
+	padding: 225px 50px;
+	text-align: center;
+}
+.vue-typer {
+	font-size: 30px;
+}
+.vue-typer .custom.char.typed {
+	color: white;
+	font-weight: 800;
+	font-family: 'Lato', 'Noto Sans JP', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+}
+.vue-typer .custom.caret.pre-type {
+	background: white;
+	width: 2px;
+	height: 40px;
+}
+.vue-typer .custom.caret.pre-erase {
+	background: white;
+	width: 2px;
+	height: 40px;
+}
+.vue-typer .custom.caret.typing {
+	background: white;
+	width: 2px;
+	height: 40px;
+}
+.vue-typer .custom.caret.erasing {
+	background: white;
+	width: 2px;
+	height: 40px;
 }
 
 /* SEC01 Profile
@@ -246,7 +281,7 @@ section h2 span {
 		opacity: .8;
 	}
 	
-	/* SEC03 BRAND
+	/* SEC03 Products
 	-----------------*/
 	.col4{
 		text-align: center;
