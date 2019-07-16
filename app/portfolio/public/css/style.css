@@ -164,6 +164,62 @@ section h2 span {
 	height: auto;
 }
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.grid_server_side {
+	width: 900px;
+}
+.container {
+	display: -webkit-flex;
+	display: flex;
+	flex-wrap: wrap;
+}
+li {
+	margin: 3px;
+	float: left;
+	list-style: none;
+}
+.inner_flexbox {
+}
+.collection_flexbox {
+	width: 216px;
+	height: 68px;
+	margin: 1px;
+	padding: 8px;
+	border: 1px solid lightgray;
+	overflow: hidden;
+	align-items: flex-start;
+}
+.box_self_evaluation {
+	width: 65px;
+	height: 65px;
+	margin: 1px;
+	padding: 1px;
+	border: solid lightgray;
+	border-width:0px 1px 0px 0px;
+}
+.overwiew {
+	
+}
+/** 通常時 **/
+.skill__collection__boxWrap {
+	position: relative;
+	display: block;
+	float: left;
+
+}
+.clearFix {
+	min-height: 1px;
+	clear: both;
+	display: block;
+}
+/** ホバーされたとき **/
+.skill__collection__boxWrap_anim {
+
+}
 
 /* SEC03 Products
 ------------------------------------------------------------*/
