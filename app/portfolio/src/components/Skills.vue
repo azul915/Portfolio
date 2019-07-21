@@ -3,101 +3,112 @@
         <h2><span>SKILL</span></h2>
 
         <div class="inner">
-            <div class="grid_server_side">
-                <ul class="container">
-                    <li v-bind:class="{ skill__collection__boxWrap: isNormal, skill__collection__boxWrap_anim: isHovered }" v-on:mouseover="showDetail" v-on:mouseleave="showSimple">
-                        <div class="collection_flexbox">
-                            <div class="inner_flexbox">
-                                <div class="box_self_evaluation">
-                                    
-                                </div>
-                                <div class="overwiew">
-                                    <ul>
-                                        <li class="name"></li>
-                                        <li class="duration"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- isHoveredで表示▼ -->
-                            <div class="skillDetail clearFix">
-                                <div class="detail"></div>
-                            </div>
-                            <!-- isHoveredで表示▲-->
-                        </div>
-                    </li>
 
-                    <!-- <li><div class="sample" style="width:150px; height:75px;margin:1px; padding:10px; border:1px solid black; background-color:lightgray;">ボックスサイズの算出</div></li>
-                    <li><div class="sample" style="width:150px; height:75px;margin:1px; padding:10px; border:1px solid black; background-color:lightgray;">ボックスサイズの算出</div></li>
-                    <li><div class="sample" style="width:150px; height:75px;margin:1px; padding:10px; border:1px solid black; background-color:lightgray;">ボックスサイズの算出</div></li>
-                    <li><div class="sample" style="width:150px; height:75px;margin:1px; padding:10px; border:1px solid black; background-color:lightgray;">ボックスサイズの算出</div></li> -->
+            <div class="grid">
+                <div id="server_side" class="grid_title">サーバーサイド</div>
+                <ul class="container">
+                    <li v-bind:class="{ skill_collection_box: isNormal, skill_collection_box_anim: isHovered }"
+                        v-on:mouseover="showDetail" v-on:mouseleave="showSimple"
+                        v-for="(skill, id) in server_side" :key="id">
+
+                        <div class="inner_collection_box">
+                            <div class="box_self_evaluation">
+                                <PieChart class="chart" v-bind:self-eval="skill.self_evaluation" />
+                                <div class="count">
+                                    <em>{{ skill.self_evaluation }}</em>
+                                </div>
+                                <div class="title">習熟度</div>
+                            </div>
+                            <div class="overwiew">
+                                <ul>
+                                    <div class="name"><li>{{ skill.name }}</li></div>
+                                    <div class="duration"><li>経験：{{ skill.duration }}ヶ月程度</li></div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- isHoveredで表示▼ -->
+                        <div class="skillDetail clearFix">
+                            <div class="detail"></div>
+                        </div>
+                        <!-- isHoveredで表示▲-->
+
+                    </li>
                 </ul>
-                <!-- <table>
-                <tr>
-                    <th class="term">サーバーサイド</th>
-                    <th class="category">言語/サーバーOS/FW/ツール・MW</th>
-                    <th class="name">名前</th>
-                    <th class="duration">経験(ヶ月)</th>
-                    <th class="self_evaluation">自己評価(5段階)</th>
-                    <th class="detail">詳細</th>
-                </tr>
-                <tr v-for="(skill, id) in server_side" :key="id">
-                    <td></td>
-                    <td>{{ skill.category_name }}</td>
-                    <td>{{ skill.name }}</td>
-                    <td>{{ skill.duration }}</td>
-                    <td>{{ skill.self_evaluation }}</td>
-                    <td>{{ skill.detail }}</td>
-                </tr>
-                </table> -->
             </div>
-            <div class="grid_front_end">
-                <table>
-                <tr>
-                    <th>フロントエンド</th>
-                    <th class="category">言語/サーバーOS/FW/ツール・MW</th>
-                    <th class="name">名前</th>
-                    <th class="duration">経験(ヶ月)</th>
-                    <th class="self_evaluation">自己評価(5段階)</th>
-                    <th class="detail">詳細</th>
-                </tr>
-                <tr v-for="(skill, id) in front_end" :key="id">
-                    <td></td>
-                    <td>{{ skill.category_name }}</td>
-                    <td>{{ skill.name }}</td>
-                    <td>{{ skill.duration }}</td>
-                    <td>{{ skill.self_evaluation }}</td>
-                    <td>{{ skill.detail }}</td>
-                </tr>
-                </table>
+
+            <div id="front_end" class="grid">
+                <div class="grid_title">フロントエンド</div>
+                <ul class="container">
+                    <li v-bind:class="{ skill_collection_box: isNormal, skill_collection_box_anim: isHovered }"
+                        v-on:mouseover="showDetail" v-on:mouseleave="showSimple"
+                        v-for="(skill, id) in front_end" :key="id">
+
+                        <div class="inner_collection_box">
+                            <div class="box_self_evaluation">
+                                <PieChart class="chart" v-bind:self-eval="skill.self_evaluation" />
+                                <div class="count">
+                                    <em>{{ skill.self_evaluation }}</em>
+                                </div>
+                                <div class="title">習熟度</div>
+                            </div>
+                            <div class="overwiew">
+                                <ul>
+                                    <div class="name"><li>{{ skill.name }}</li></div>
+                                    <div class="duration"><li>経験：{{ skill.duration }}ヶ月程度</li></div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- isHoveredで表示▼ -->
+                        <div class="skillDetail clearFix">
+                            <div class="detail"></div>
+                        </div>
+                        <!-- isHoveredで表示▲-->
+
+                    </li>
+                </ul>
             </div>
-             <div class="grid_infrastructure">
-                <table>
-                <tr>
-                    <th>インフラ</th>
-                    <th class="category">言語/サーバーOS/FW/ツール・MW</th>
-                    <th class="name">名前</th>
-                    <th class="duration">経験(ヶ月)</th>
-                    <th class="self_evaluation">自己評価(5段階)</th>
-                    <th class="detail">詳細</th>
-                </tr>
-                <tr v-for="(skill, id) in infrastructure" :key="id">
-                    <td></td>
-                    <td>{{ skill.category_name }}</td>
-                    <td>{{ skill.name }}</td>
-                    <td>{{ skill.duration }}</td>
-                    <td>{{ skill.self_evaluation }}</td>
-                    <td>{{ skill.detail }}</td>
-                </tr>
-                </table>
+
+             <div id="infrastructure" class="grid">
+                <div class="grid_title">フロントエンド</div>
+                <ul class="container">
+                    <li v-bind:class="{ skill_collection_box: isNormal, skill_collection_box_anim: isHovered }"
+                        v-on:mouseover="showDetail" v-on:mouseleave="showSimple"
+                        v-for="(skill, id) in infrastructure" :key="id">
+
+                        <div class="inner_collection_box">
+                            <div class="box_self_evaluation">
+                                <PieChart class="chart" v-bind:self-eval="skill.self_evaluation" />
+                                <div class="count">
+                                    <em>{{ skill.self_evaluation }}</em>
+                                </div>
+                                <div class="title">習熟度</div>
+                            </div>
+                            <div class="overwiew">
+                                <ul>
+                                    <div class="name"><li>{{ skill.name }}</li></div>
+                                    <div class="duration"><li>経験：{{ skill.duration }}ヶ月程度</li></div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- isHoveredで表示▼ -->
+                        <div class="skillDetail clearFix">
+                            <div class="detail"></div>
+                        </div>
+                        <!-- isHoveredで表示▲-->
+
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </template>
 <script>
 import db from '@/firebaseInit.js'
+import PieChart from '@/components/PieChart'
 
 export default {
     name: 'skills',
+    components: { PieChart },
     data () {
         return {
             server_side: [],
