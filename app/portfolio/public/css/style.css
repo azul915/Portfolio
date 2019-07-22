@@ -172,7 +172,7 @@ section h2 span {
 .grid {
 	width: 702px;
 	border: 1px solid lightgray;
-	padding: 20px 10px;
+	padding: 10px;
 	margin: 15px;
 }
 .grid_title {
@@ -251,11 +251,18 @@ em {
 .clearFix {
 	min-height: 1px;
 	clear: both;
-	display: block;
+	display: none;
 }
 /** ホバーされたとき **/
-.skill__collection__boxWrap_anim {
-
+.selected{
+	width: 220px;
+	height: 220px;
+	box-shadow: 0 0 4px gray;
+}
+.detail {
+	width: 226px;
+	height: 68px;
+	border: 1px solid lightgray;
 }
 
 /* SEC03 Products
