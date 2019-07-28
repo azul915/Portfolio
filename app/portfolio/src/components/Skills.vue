@@ -8,9 +8,6 @@
                 <div class="grid_title">サーバーサイド</div>
                 <ul class="container">
                     <li class="skill_collection_box"
-                        v-bind:class="{ selected : activeSkill === skill }"
-                        v-on:mouseover="activeSkill = skill"
-                        v-on:mouseleave="activeSkill = ''"
                         v-for="skill in server_side" :key="skill.id">
                         <div class="inner_collection_box">
                             <div class="box_self_evaluation">
@@ -26,12 +23,13 @@
                                     <div class="duration"><li>経験：{{ skill.duration }}ヶ月程度</li></div>
                                 </ul>
                             </div>
-                            <div class="skillDetail clearFix">
+                            <div class="skillDetail">
                                 <div class="detail">{{ skill.detail }}</div>
                             </div>
                         </div>
 
                     </li>
+
                 </ul>
             </div>
 
@@ -39,9 +37,6 @@
                 <div class="grid_title">フロントエンド</div>
                 <ul class="container">
                     <li class="skill_collection_box"
-                        v-bind:class="{ selected : activeSkill === skill }"
-                        v-on:mouseover="activeSkill = skill"
-                        v-on:mouseleave="activeSkill = ''"
                         v-for="skill in front_end" :key="skill.id">
 
                         <div class="inner_collection_box">
@@ -58,7 +53,7 @@
                                     <div class="duration"><li>経験：{{ skill.duration }}ヶ月程度</li></div>
                                 </ul>
                             </div>
-                            <div class="skillDetail clearFix">
+                            <div class="skillDetail">
                                 <div class="detail">{{ skill.detail }}</div>
                             </div>
                         </div>
@@ -68,12 +63,9 @@
             </div>
 
              <div id="infrastructure" class="grid">
-                <div class="grid_title">フロントエンド</div>
+                <div class="grid_title">インフラ</div>
                 <ul class="container">
                     <li class="skill_collection_box"
-                        v-bind:class="{ selected : activeSkill == skill }"
-                        v-on:mouseover="activeSkill = skill"
-                        v-on:mouseleave="activeSkill = ''"
                         v-for="skill in infrastructure" :key="skill.id">
 
                         <div class="inner_collection_box">
@@ -90,7 +82,7 @@
                                     <div class="duration"><li>経験：{{ skill.duration }}ヶ月程度</li></div>
                                 </ul>
                             </div>
-                            <div class="skillDetail clearFix">
+                            <div class="skillDetail">
                                 <div class="detail">{{ skill.detail }}</div>
                             </div>
                         </div>
@@ -113,12 +105,10 @@ export default {
             server_side: [],
             front_end: [],
             infrastructure: [],
-            activeSkill: "",
         }
     },
 
     methods: {
-        
     },
 
     // インスタンスライフサイクルフック

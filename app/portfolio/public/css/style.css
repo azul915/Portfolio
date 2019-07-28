@@ -170,7 +170,7 @@ section h2 span {
 }
 
 .grid {
-	width: 702px;
+	width: 707px;
 	border: 1px solid lightgray;
 	padding: 10px;
 	margin: 15px;
@@ -224,7 +224,7 @@ em {
     font-size: 3px;
 }
 .overwiew {
-	width: 150px;
+	width: 160px;
 	height: 65px;
 }
 .name {
@@ -237,33 +237,43 @@ em {
 	font-weight: 400;
 	font-size: 10px;
 }
+.skillDetail {
+	border-top: 1px solid lightgray;
+    width: 216px;
+    height: 40px;
+    margin: 12px 0 0 0;
+	
+}
+.detail {
+	width: 198px;
+    height: 56px;
+    margin: 4px 4px 2px 9px;
+    font-weight: 400;
+    font-size: 3px;
+
+}
 /** 通常時 **/
 .skill_collection_box {
 	width: 216px;
-	height: 68px;
+	height: 136px;
 	margin: 4px 4px;
 	padding: 4px;
 	border: 1px solid lightgray;
 	overflow: hidden;
+	position: relative;
 	align-items: flex-start;
 
 }
-.clearFix {
-	min-height: 1px;
-	clear: both;
-	display: none;
-}
+
 /** ホバーされたとき **/
-.selected{
+/* .selected{
 	width: 220px;
 	height: 220px;
 	box-shadow: 0 0 4px gray;
-}
-.detail {
-	width: 226px;
-	height: 68px;
-	border: 1px solid lightgray;
-}
+	align-items: flex-start;
+	position: absolute;
+	z-index: 4;
+} */
 
 /* SEC03 Products
 ------------------------------------------------------------*/
