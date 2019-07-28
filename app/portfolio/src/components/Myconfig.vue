@@ -180,7 +180,7 @@
                     <td class="delete"></td>
                 </tr>
 
-                <tr v-for="(product, id) in products" :key="id">
+                <tr v-for="product in products" :key="product.id">
                     <td class="name">{{ product.name }}</td>
                     <td class="effort">{{ product.effort }}</td>
                     <td class="feature">{{ product.feature }}</td>
