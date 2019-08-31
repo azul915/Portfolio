@@ -6,7 +6,7 @@
             <ul class="col4">
                 <li v-for="product in products" :key="product.id">
                     <p class="img"><img v-bind:src="product.demoURL" width="168" height="168" alt=""></p>
-                    <p>{{ product.name }}</p>
+                    <a v-bind:href="product.githuburl" target="_blank"><p>{{ product.name }}</p></a>
                     <p>{{ product.feature }}</p>
                     <p>{{ product.effort }}</p>
                 </li>
@@ -38,7 +38,8 @@ export default {
                 'name': doc.data().prd_name,
                 'demoURL': doc.data().demo,
                 'feature': doc.data().feature,
-                'effort': doc.data().effort
+                'effort': doc.data().effort,
+                'githuburl' : doc.data().githuburl,
             }
             this.products.push(data)
             })

@@ -92,6 +92,12 @@
                     </div>
                 </div>
                 <div class="field">
+                    <label class="label">GitHub</label>
+                    <div class="controll">
+                        <input type="text" v-model="githuburl" placeholder="GitHubのURL">
+                    </div>
+                </div>
+                <div class="field">
                     <div class="control">
                         <button type="submit">登録する</button>
                     </div>
@@ -177,6 +183,7 @@
                     <th class="name">name</th>
                     <th class="effort">effort</th>
                     <th class="feature">feature</th>
+                    <th class="githuburl">githuburl</th>
                     <td class="delete"></td>
                 </tr>
 
@@ -184,6 +191,7 @@
                     <td class="name">{{ product.name }}</td>
                     <td class="effort">{{ product.effort }}</td>
                     <td class="feature">{{ product.feature }}</td>
+                    <td class="githuburl">{{ product.githuburl }}</td>
                     <td class="delete"><button v-on:click="deleteProduct(id, product.name)">削除</button></td>
                 </tr>
             </table>
@@ -210,6 +218,7 @@ export default {
             prd_name: '',
             effort: '',
             feature: '',
+            githuburl: '',
             serverside: [],
             frontend: [],
             infrastructure: [],
@@ -265,7 +274,7 @@ export default {
                 'term': this.term,
                 'self_evaluation': this.self_evaluation | 0,
                 'detail': this.detail,
-                'created_at': firebase.firestore.FieldValue.serverTimestamp()
+                'created_at': firebase.firestore.Timestamp.now()
             }
 
             // タームの値で登録先コレクションとドキュメント名を指定してCloudFirestoreに追加
@@ -334,13 +343,14 @@ export default {
                 'demo': null, 
                 'effort': this.effort,
                 'feature': this.feature,
-                'created_at': firebase.firestore.FieldValue.serverTimestamp()
+                'githuburl' : this.githuburl,
+                'created_at': firebase.firestore.Timestamp.now()
             }
 
             // storageにアップロード
             let file_name = this.demo.name
-            let storage = firebase.storage()
-            let uploadRef = storage.ref('images/').child(file_name)
+            let uploadRef = firebase.storage().ref('images/').child(file_name)
+
             uploadRef.put(this.demo).then(snapshot => {
                 console.log(snapshot.state)
                 // アップロードしたurlをdemoのパスとしてセット
@@ -350,7 +360,7 @@ export default {
                     db.collection('products').doc(this.prd_name).set(prd).then(() => {
                         this.product.push(prd)
                         console.log('Succeeded update url')
-                        this.prd_name = ''; this.effort = ''; this.feature = '';
+                        this.prd_name = ''; this.effort = ''; this.feature = ''; this.githuburl = '';
                     })
                     .catch(error => {
                         console.log(error)
