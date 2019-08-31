@@ -47,7 +47,6 @@
                 <!-- ▼sec03_Products -->
                 <section id="sec03">
                     <Products/>
-                    <Slick/>
                 </section>
                 <!-- ▲sec03_Products -->
                 <!-- ▼sec04_Blog -->
@@ -78,8 +77,8 @@ import MainImg from '@/components/MainImg.vue'
 import Greeting from '@/components/Greeting.vue'
 import Profile from '@/components/Profile.vue'
 import Skills from '@/components/Skills.vue'
-import Products from '@/components/Products.vue'
 import Slick from '@/components/Slick.vue'
+import Products from '@/components/Products.vue'
 import Blog from '@/components/Blog.vue'
 import Contact from '@/components/Contact.vue'
 

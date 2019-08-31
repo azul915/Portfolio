@@ -95,7 +95,7 @@
 </template>
 <script>
 import db from '@/firebaseInit.js'
-import PieChart from '@/components/PieChart'
+import PieChart from '@/components/PieChart.vue'
 
 export default {
     name: 'skills',
