@@ -5,8 +5,7 @@
         <div class="inner">
             <ul>
                 <li v-for="post in articles" :key="post.id">
-                    <span class="tag" v-for="tag in post['tags']" :key="tag.id">{{ tag['name'] }}</span>
-
+                    <!-- <span class="tag" v-for="tag in post['tags']" :key="tag.id">{{ tag['name'] }}</span> -->
                     <a v-bind:href="post['url']" target="_blank" rel="noopener noreferrer">
                         <div>{{ post['title'] }}</div>
                     </a>
