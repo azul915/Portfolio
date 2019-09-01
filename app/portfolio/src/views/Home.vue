@@ -18,8 +18,8 @@
                             <li><a href="#sec05">CONTACT</a></li>
                         </ul>
                         <ul id="sns">
-                            <li><a href="#" target="_blank"><img src="images/iconTw.png" width="20" height="20" alt="twitter"></a></li>
-                            <li><a href="#" target="_blank"><img src="images/iconGitHub.png" width="20" height="20" alt="GitHub"></a></li>
+                            <li><a href="https://qiita.com/azul915" target="_blank"><img src="images/iconQiita.png" width="20" height="20" alt="twitter"></a></li>
+                            <li><a href="https://github.com/azul915" target="_blank"><img src="images/iconGitHub.png" width="20" height="20" alt="GitHub"></a></li>
                         </ul>
                     </div>
                     </nav>
